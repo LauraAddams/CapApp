@@ -11,6 +11,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
+import SearchResults from './ProductResult';
+
 function url(input) {
   input = input.replace(new RegExp(' ', 'g'), '+');
   return 'https://skincare-api.herokuapp.com/product?q=' + input;
@@ -32,7 +34,7 @@ export default class SearchPage extends Component<{}> {
   };
 
   _onSearchPressed = () => {
-    const query = url('product_name', this.state.searchString, 1);
+    const query = url(this.state.searchString);
     this._query(query);
   };
 
@@ -66,29 +68,29 @@ export default class SearchPage extends Component<{}> {
     const spinner = this.state.isLoading ?
     <ActivityIndicator size='large'/> : null;
     return (
-        <View style={styles.container}>
+      <View style={styles.container}>
 
-          <Text style={styles.description}>
-          SEARCH PRODUCTS
-          </Text>
+      <Text style={styles.description}>
+      SEARCH PRODUCTS
+      </Text>
 
-          <View style={styles.flowRight}>
+      <View style={styles.flowRight}>
 
-            <TextInput
-            style={styles.searchInput}
-            value={this.state.searchString}
-            onChange={this._onSearchTextChanged}
-            placeholder='Search'/>
-            <Button
-            onPress={this._onSearchPressed}
-            color='#333333'
-            title='GO'
-            />
+      <TextInput
+      style={styles.searchInput}
+      value={this.state.searchString}
+      onChange={this._onSearchTextChanged}
+      placeholder='Search'/>
+      <Button
+      onPress={this._onSearchPressed}
+      color='#333333'
+      title='GO'
+      />
 
-          </View>
-          {spinner}
-        </View>
-      );
+      </View>
+      {spinner}
+      </View>
+    );
   }
 }
 
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 30,
-    marginTop: 65,
+    marginTop: 85,
     alignItems: 'center'
   },
   flowRight: {
