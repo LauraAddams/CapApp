@@ -7,7 +7,9 @@ import {
   StyleSheet,
   NavigatorIOS,
 } from 'react-native';
+
 import SearchProduct from './SearchProduct';
+import Index from './Index';
 
 export default class App extends Component<{}> {
   render() {
