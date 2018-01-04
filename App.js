@@ -10,6 +10,7 @@ import {
 
 import SearchProduct from './SearchProduct';
 import Index from './Index';
+import SearchIngredients from './TaggedIngredient';
 
 export default class App extends Component<{}> {
   render() {
@@ -18,7 +19,7 @@ export default class App extends Component<{}> {
         style={styles.container}
         initialRoute={{
           title: 'Skincare App',
-          component: SearchProduct,
+          component: SearchIngredients,
         }}/>
     );
   }

@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { Component } from 'react';
 
 import {
@@ -11,18 +9,18 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import SearchResults from './ProductResult';
+import SearchResults from './ListView';
 
 function url(input) {
   input = input.replace(new RegExp(' ', 'g'), '+');
-  return 'https://skincare-api.herokuapp.com/product?q=' + input;
+  return `https://skincare-api.herokuapp.com/ingredient?q=${input}`;
 }
 
-export default class SearchPage extends Component<{}> {
+export default class SearchIngredients extends Component<{}> {
   constructor(props) {
     super(props);
     this.state = {
-      searchString: 'Glycolic acid Missha',
+      searchString: 'Glycolic acid',
       isLoading: false,
       message: '',
       selectedTab: 'welcome'
@@ -41,23 +39,23 @@ export default class SearchPage extends Component<{}> {
   _query = (query) => {
     this.setState({ isLoading: true });
     fetch(query)
-    .then(response => response.json())
-    .then(json => this._response(json))
-    .catch(error =>
-      this.setState({
-        isLoading: false,
-        message: 'An error occured' + error
-      })
-    );
+      .then(response => response.json())
+      .then(json => this._response(json))
+      .catch(error =>
+        this.setState({
+          isLoading: false,
+          message: `An error occured ${error}`
+        }));
   };
 
   _response = (response) => {
-    this.setState({ isLoading: false, message: ''});
+    this.setState({ isLoading: false, message: '' });
     if (response.length) {
-      this.props.navigator.push({
-        title: 'Results',
-        component: SearchResults,
-        passProps: {products: response}
+      this.setState({
+        isLoading: false,
+        message: '',
+        selectedTab: 'welcome',
+        a: { ingredients: response },
       });
     } else {
       this.setState({ message: 'No results. Please try again.'});
@@ -66,29 +64,33 @@ export default class SearchPage extends Component<{}> {
 
   render() {
     const spinner = this.state.isLoading ?
-    <ActivityIndicator size='large'/> : null;
+      <ActivityIndicator size='large'/> : null;
+
     return (
       <View style={styles.container}>
 
         <Text style={styles.description}>
-        SEARCH PRODUCTS
+        SEARCH INGREDIENTS
         </Text>
 
         <View style={styles.flowRight}>
 
           <TextInput
-          style={styles.searchInput}
-          value={this.state.searchString}
-          onChange={this._onSearchTextChanged}
-          placeholder='Search'/>
-          <Button
-          onPress={this._onSearchPressed}
-          color='#333333'
-          title='GO'
+            style={styles.searchInput}
+            value={this.state.searchString}
+            onChange={this._onSearchTextChanged}
+            placeholder="Search"
           />
-
+          <Button
+            onPress={this._onSearchPressed}
+            color="#333333"
+            title="GO"
+          />
         </View>
         {spinner}
+        <SearchResults
+          ingredients={this.state.a}
+        />
       </View>
     );
   }
@@ -101,12 +103,12 @@ const styles = StyleSheet.create({
     letterSpacing: 3,
     paddingBottom: 5,
     color: '#333333',
-    marginBottom: 10
+    marginBottom: 10,
   },
   container: {
     padding: 30,
     marginTop: 85,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   flowRight: {
     flexDirection: 'row',
