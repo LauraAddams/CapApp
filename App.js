@@ -20,7 +20,7 @@ export default class App extends Component<{}> {
         style={styles.container}
         initialRoute={{
           title: 'Skincare App',
-          component: Index,
+          component: AddProduct,
         }}/>
     );
   }

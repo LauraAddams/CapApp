@@ -40,21 +40,30 @@ export default class AddProduct extends Component<{}> {
 
   _onSearchPressed = () => {
     const query = url(this.state.addBrand, this.state.addName, this.state.addIng);
-    console.log(query);
     this._query(query);
   };
 
   _query = (query) => {
     this.setState({ isLoading: true });
-    // fetch(query)
-    // .then(response => response.json())
-    // .then(json => this._response(json))
-    // .catch(error =>
-    //   this.setState({
-    //     isLoading: false,
-    //     message: 'An error occured' + error
-    //   })
-    // );
+    fetch('https://skincare-api.herokuapp.com/products', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        brand: this.state.addBrand,
+        name: this.state.addName,
+        ingredients: this.state.addIng,
+      })
+    })
+
+    .catch(error =>
+      this.setState({
+        isLoading: false,
+        message: 'An error occured' + error
+      })
+    );
 
   };
 
