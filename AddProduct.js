@@ -26,19 +26,27 @@ export default class AddProduct extends Component<{}> {
     super(props);
     this.state = {
       addBrand: 'Generic',
-      addName: 'Jojoba Oil',
-      addIng: 'Jojoba Oil',
+      addName: 'Mixed Spritz',
+      addIng: 'Jojoba Oil, Rose Water, Water',
       isLoading: false,
       message: '',
       selectedTab: 'welcome'
     };
   }
 
-  _onSearchTextChanged = (event) => {
-    this.setState({ searchString: event.nativeEvent.text });
+  _onBrandTextChanged = (event) => {
+    this.setState({ addBrand: event.nativeEvent.text });
   };
 
-  _onSearchPressed = () => {
+  _onNameTextChanged = (event) => {
+    this.setState({ addName: event.nativeEvent.text });
+  };
+
+  _onIngTextChanged = (event) => {
+    this.setState({ addIng: event.nativeEvent.text });
+  };
+
+  _onButtonPress = () => {
     const query = url(this.state.addBrand, this.state.addName, this.state.addIng);
     this._query(query);
   };
@@ -64,21 +72,7 @@ export default class AddProduct extends Component<{}> {
         message: 'An error occured' + error
       })
     );
-
   };
-
-  // _response = (response) => {
-  //   this.setState({ isLoading: false, message: ''});
-  //   if (response.length) {
-  //     this.props.navigator.push({
-  //       title: 'Results',
-  //       component: SearchResults,
-  //       passProps: {products: response}
-  //     });
-  //   } else {
-  //     this.setState({ message: 'No results. Please try again.'});
-  //   }
-  // };
 
   render() {
     const spinner = this.state.isLoading ?
@@ -95,23 +89,23 @@ export default class AddProduct extends Component<{}> {
           <TextInput
           style={styles.searchInput}
           value={this.state.addBrand}
-          onChange={this._onSearchTextChanged}
+          onChange={this._onBrandTextChanged}
           placeholder='Brand'/>
 
           <TextInput
           style={styles.searchInput}
           value={this.state.addName}
-          onChange={this._onSearchTextChanged}
+          onChange={this._onNameTextChanged}
           placeholder='Name'/>
 
           <TextInput
           style={styles.searchInput}
           value={this.state.addIng}
-          onChange={this._onSearchTextChanged}
+          onChange={this._onIngTextChanged}
           placeholder='Ingredients'/>
 
           <Button
-          onPress={this._onSearchPressed}
+          onPress={this._onButtonPress}
           color='#333333'
           title='GO'
           />
