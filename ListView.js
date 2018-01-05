@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
-  TouchableHighlight,
   FlatList,
   Text,
   Dimensions
@@ -20,8 +19,6 @@ class ListItem extends React.PureComponent {
     const name = item.ingredient[0].toUpperCase() + item.ingredient.slice(1);
 
     return (
-      <TouchableHighlight
-        underlayColor='#dddddd'>
           <View style={styles.rowContainer}>
             <View style={styles.textContainer}>
               <Text style={styles.name}
@@ -29,7 +26,6 @@ class ListItem extends React.PureComponent {
             </View>
             <View style={styles.separator}/>
           </View>
-      </TouchableHighlight>
     );
   }
 }

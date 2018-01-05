@@ -15,7 +15,7 @@ export default class Routine extends Component<{}> {
   render() {
     return (
       <View style={styles.container}>
-
+        <Text>My Routine</Text>
       </View>
     );
   }
@@ -23,7 +23,9 @@ export default class Routine extends Component<{}> {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ff3366',
+    backgroundColor: 'lightpink',
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });

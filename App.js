@@ -12,6 +12,7 @@ import SearchProduct from './SearchProduct';
 import Index from './Index';
 import SearchIngredients from './TaggedIngredient';
 import AddProduct from './AddProduct';
+import CompareProduct from './CompareProduct';
 
 export default class App extends Component<{}> {
   render() {

@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'stretch',
+    marginBottom: 50
   },
   searchInput: {
     fontWeight: '200',

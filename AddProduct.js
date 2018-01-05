@@ -29,8 +29,8 @@ export default class AddProduct extends Component<{}> {
     super(props);
     this.state = {
       addBrand: 'Generic',
-      addName: 'Mixed Spritz',
-      addIng: 'Jojoba Oil, Rose Water, Water',
+      addName: 'Rose Water',
+      addIng: 'Rose Water',
       isLoading: false,
       message: '',
       selectedTab: 'welcome',

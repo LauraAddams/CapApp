@@ -9,7 +9,10 @@ import {
   View,
   Button,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
+
+import SearchResults from './ProductResult';
 
 function url(input) {
   input = input.replace(new RegExp(' ', 'g'), '+');
@@ -20,20 +23,34 @@ export default class CompareProduct extends Component<{}> {
   constructor(props) {
     super(props);
     this.state = {
-      searchString: 'Uggggghhhhhhhhhhh',
+      searchString1: 'Benton Aloe BHA skin toner',
+      searchString2: 'Goodal Silky plus soothing',
       isLoading: false,
       message: '',
-      selectedTab: 'welcome'
+      selectedTab: 'welcome',
+      textInput: []
     };
   }
 
+  _addInput = (key) => {
+    let textInput = this.state.textInput;
+    textInput.push(<TextInput key={key} style={styles.searchInput}/>);
+    this.setState({ textInput })
+  };
+
   _onSearchTextChanged = (event) => {
-    this.setState({ searchString: event.nativeEvent.text });
+    this.setState({ searchString1: event.nativeEvent.text });
+  };
+
+  _onSearch2TextChanged = (event) => {
+    this.setState({ searchString2: event.nativeEvent.text });
   };
 
   _onSearchPressed = () => {
-    const query = url(this.state.searchString);
-    this._query(query);
+    const query1 = url(this.state.searchString1);
+    const query2 = url(this.state.searchString2);
+    this._query(query1);
+    this._query(query2);
   };
 
   _query = (query) => {
@@ -76,13 +93,30 @@ export default class CompareProduct extends Component<{}> {
 
           <TextInput
           style={styles.searchInput}
-          value={this.state.searchString}
+          value={this.state.searchString1}
           onChange={this._onSearchTextChanged}
-          placeholder='Search'/>
+          placeholder='Product 1'/>
+
+          <TextInput
+          style={styles.searchInput}
+          value={this.state.searchString2}
+          onChange={this._onSearch2TextChanged}
+          placeholder='Product 2'/>
+
+        <TouchableOpacity
+          onPress={() => this._addInput(this.state.textInput.length)}
+          style={styles.addInput}
+          underlayColor='#fff'>
+          <Text style={styles.addText}>+</Text>
+          {this.state.textInput.map((value, index) => {
+            return value
+          })}
+        </TouchableOpacity>
+
           <Button
           onPress={this._onSearchPressed}
           color='#333333'
-          title='GO'
+          title='COMPARE'
           />
 
         </View>
@@ -107,8 +141,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   flowRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'column',
     alignSelf: 'stretch',
   },
   searchInput: {
@@ -122,4 +155,20 @@ const styles = StyleSheet.create({
     borderColor: '#333333',
     color: '#333333',
   },
+  addInput: {
+    alignItems: 'flex-end',
+  },
+  addText: {
+    color: '#ffffff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 16,
+    backgroundColor: '#000000',
+    width: 22,
+    paddingBottom: 2,
+    marginTop: 10,
+    marginRight: 10,
+    borderRadius: 11,
+    overflow: 'hidden'
+  }
 });

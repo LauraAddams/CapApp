@@ -64,12 +64,11 @@ const styles = StyleSheet.create({
     fontWeight: '200',
     fontSize: 18,
     color: '#333333',
-    padding: 8
+    padding: 8,
   },
   list: {
     height: 400,
     paddingLeft: 20,
-    backgroundColor: '#FAF6F5',
     marginTop: 27,
     marginBottom: 27
   },
