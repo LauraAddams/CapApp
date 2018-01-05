@@ -9,7 +9,10 @@ import {
   View,
   Button,
   ActivityIndicator,
+  TouchableOpacity
 } from 'react-native';
+
+import Modal from 'react-native-modal';
 
 import SearchResults from './ProductResult';
 
@@ -30,9 +33,25 @@ export default class AddProduct extends Component<{}> {
       addIng: 'Jojoba Oil, Rose Water, Water',
       isLoading: false,
       message: '',
-      selectedTab: 'welcome'
+      selectedTab: 'welcome',
+      visibleModal: null
     };
   }
+
+  _renderButton = (text, onPress) => (
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.button}>
+        <Text>{text}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+  _renderModalContent = () => (
+    <View style={styles.modalContent}>
+      <Text>Product Added</Text>
+      {this._renderButton('Go to Product', () => this.setState({ visibleModal: null }))}
+    </View>
+  );
 
   _onBrandTextChanged = (event) => {
     this.setState({ addBrand: event.nativeEvent.text });
@@ -65,6 +84,7 @@ export default class AddProduct extends Component<{}> {
         ingredients: this.state.addIng,
       })
     })
+    .then(json => this.setState({visibleModal: 1, isLoading: false }))
 
     .catch(error =>
       this.setState({
@@ -79,6 +99,10 @@ export default class AddProduct extends Component<{}> {
     <ActivityIndicator size='large'/> : null;
     return (
       <View style={styles.container}>
+
+         <Modal isVisible={this.state.visibleModal === 1}>
+           {this._renderModalContent()}
+         </Modal>
 
         <Text style={styles.description}>
         ADD PRODUCT
@@ -145,5 +169,22 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#333333',
     color: '#333333',
+  },
+  button: {
+    backgroundColor: 'lightblue',
+    padding: 12,
+    margin: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
   },
 });

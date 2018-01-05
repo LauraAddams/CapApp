@@ -7,7 +7,10 @@ import {
   TouchableHighlight,
   FlatList,
   Text,
+  Dimensions
 } from 'react-native';
+
+const width = Dimensions.get('window').width;
 
 
 class ListItem extends React.PureComponent {
@@ -18,30 +21,26 @@ class ListItem extends React.PureComponent {
 
     return (
       <TouchableHighlight
-        onPress={this._onPress}
         underlayColor='#dddddd'>
-        <View>
           <View style={styles.rowContainer}>
             <View style={styles.textContainer}>
               <Text style={styles.name}
                 numberOfLines={1}>{name}</Text>
             </View>
+            <View style={styles.separator}/>
           </View>
-          <View style={styles.separator}/>
-        </View>
       </TouchableHighlight>
     );
   }
 }
 
-export default class SearchResults extends Component<{}> {
+export default class ListView extends Component<{}> {
   _keyExtractor = (item, index) => index;
 
   _render = ({item, index}) => (
     <ListItem
       item={item}
       index={index}
-      onPressItem={this._onPressItem}
     />
   );
 
@@ -51,26 +50,31 @@ export default class SearchResults extends Component<{}> {
         data={this.props.ingredients}
         keyExtractor={this._keyExtractor}
         renderItem={this._render}
+        style={styles.mc}
       />
     );
   }
 }
 
 const styles = StyleSheet.create({
+  mc: {
+  },
   textContainer: {
-    flex: 1,
+    justifyContent: 'flex-start'
   },
   separator: {
     height: 1,
-    backgroundColor: '#f5f5f5'
+    backgroundColor: 'red'
   },
   name: {
     fontWeight: '200',
     fontSize: 22,
-    color: '#333333'
+    color: '#333333',
+    paddingTop: 10,
+    paddingBottom: 10
   },
   rowContainer: {
-    flexDirection: 'row',
-    padding: 20
+    flexDirection: 'column',
+    width: width - 60,
   },
 });
